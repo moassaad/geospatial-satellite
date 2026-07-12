@@ -18,11 +18,7 @@ See [docs/project_structure.md](docs/project_structure.md).
 
 ## Getting Started
 
-1. Copy the example environment file:
-
-   ```bash
-   cp .env.example .env
-   ```
+1. Review `.env` and update values as needed. See `docs/configuration.md` for details.
 
 2. Install the project dependencies:
 
@@ -36,7 +32,7 @@ See [docs/project_structure.md](docs/project_structure.md).
    uvicorn app.main:app --reload
    ```
 
-3. Visit `http://localhost:8000` to verify the root endpoint.
+4. Visit `http://localhost:8000` to verify the root endpoint.
 
 ## Docker Compose
 

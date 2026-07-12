@@ -1,12 +1,16 @@
 from pydantic import BaseModel
 from fastapi import FastAPI
 
+from app.config.settings import Settings
+
+settings = Settings()
+
 
 class RootResponse(BaseModel):
     message: str
 
 
-app = FastAPI(title="Geospatial Satellite Data API")
+app = FastAPI(title=settings.app_name)
 
 
 @app.get("/", response_model=RootResponse)
