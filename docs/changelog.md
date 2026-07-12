@@ -1,5 +1,13 @@
 # Changelog
 
+## Sprint 02 - Docker Environment
+
+- Added `Dockerfile` to containerize the FastAPI application.
+- Added `.dockerignore` to keep the Docker build context minimal.
+- Updated `docker-compose.yml` to run both the `app` and `db` services.
+- Added an explicit `satellite_network` bridge network and `postgres_data` volume.
+- Added `docs/docker.md` with Docker Compose usage instructions.
+
 ## Sprint 01 - Application Configuration
 
 - Added `pydantic-settings` to `requirements.txt`.

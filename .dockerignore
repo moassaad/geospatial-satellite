@@ -1,0 +1,14 @@
+.venv
+__pycache__
+*.pyc
+.git
+.gitignore
+.agents
+.sprints
+docs
+tests
+docker
+sample_data
+.env
+.env.example
+*.md

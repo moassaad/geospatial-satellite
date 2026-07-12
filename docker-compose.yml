@@ -15,6 +15,28 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - satellite_network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: satellite_app
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql+psycopg2://${POSTGRES_USER:-satellite_user}:${POSTGRES_PASSWORD:-satellite_password}@db:5432/${POSTGRES_DB:-satellite_db}
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - satellite_network
 
 volumes:
   postgres_data:
+
+networks:
+  satellite_network:
+    driver: bridge

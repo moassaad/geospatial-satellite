@@ -36,11 +36,15 @@ See [docs/project_structure.md](docs/project_structure.md).
 
 ## Docker Compose
 
-Start the PostgreSQL/PostGIS database service:
+Build and start the full stack (FastAPI app and PostgreSQL/PostGIS):
 
 ```bash
-docker compose up db -d
+docker compose up --build -d
 ```
+
+Visit `http://localhost:8000` to verify the API root.
+
+For more details, see [docs/docker.md](docs/docker.md).
 
 ## License
 
