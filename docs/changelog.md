@@ -1,5 +1,19 @@
 # Changelog
 
+## Sprint 06 - Health Check
+
+- Added `/health` endpoint.
+- Created `app/routers/health.py`, `app/services/health_service.py`, and `app/repositories/health_repository.py`.
+- Added `app/schemas/health.py` for the health response model.
+- Wired the health router into `app/main.py`.
+- Added `docs/health.md` documenting the endpoint and architecture.
+
+## Sprint 05 - PostGIS Support
+
+- Added `docker/initdb/01_init_postgis.sql` to create the PostGIS extension.
+- Updated `docker-compose.yml` to mount the init script into `/docker-entrypoint-initdb.d/`.
+- Added `docs/postgis.md` explaining PostGIS initialization and verification.
+
 ## Sprint 04 - Alembic Migrations
 
 - Added `alembic` to `requirements.txt`.

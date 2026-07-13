@@ -2,6 +2,7 @@ from pydantic import BaseModel
 from fastapi import FastAPI
 
 from app.config.settings import Settings
+from app.routers.health import router as health_router
 
 settings = Settings()
 
@@ -11,6 +12,7 @@ class RootResponse(BaseModel):
 
 
 app = FastAPI(title=settings.app_name)
+app.include_router(health_router)
 
 
 @app.get("/", response_model=RootResponse)
