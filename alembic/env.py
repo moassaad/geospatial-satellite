@@ -6,6 +6,7 @@ from alembic import context
 
 from app.config.settings import Settings
 from app.database.base import Base
+from app.models.region import Region  # noqa: F401
 
 settings = Settings()
 config = context.config

@@ -1,5 +1,12 @@
 # Changelog
 
+## Sprint 07 - Region Database Model
+
+- Added `geoalchemy2` to `requirements.txt`.
+- Created `app/models/region.py` with `id`, `name`, `geometry`, and `created_at` fields.
+- Updated `alembic/env.py` to import the `Region` model so it is registered in `Base.metadata`.
+- Added `docs/domain-model.md` documenting the `Region` entity.
+
 ## Sprint 06 - Health Check
 
 - Added `/health` endpoint.
