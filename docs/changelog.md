@@ -1,5 +1,12 @@
 # Changelog
 
+## Sprint 04 - Alembic Migrations
+
+- Added `alembic` to `requirements.txt`.
+- Created `alembic.ini` and the `alembic/` directory with `env.py`, `script.py.mako`, and `versions/`.
+- Configured `alembic/env.py` to read `DATABASE_URL` from Pydantic Settings and use `Base.metadata`.
+- Added `docs/migrations.md` with Alembic usage instructions.
+
 ## Sprint 03 - SQLAlchemy Database
 
 - Added `sqlalchemy` and `psycopg2-binary` to `requirements.txt`.
