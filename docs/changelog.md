@@ -1,5 +1,12 @@
 # Changelog
 
+## Sprint 03 - SQLAlchemy Database
+
+- Added `sqlalchemy` and `psycopg2-binary` to `requirements.txt`.
+- Created `app/database/base.py` with a SQLAlchemy 2.0 `DeclarativeBase`.
+- Created `app/database/database.py` with engine, `SessionLocal`, and `get_db` dependency for session management.
+- Added `docs/database.md` covering engine configuration, session usage, and environment variables.
+
 ## Sprint 02 - Docker Environment
 
 - Added `Dockerfile` to containerize the FastAPI application.
