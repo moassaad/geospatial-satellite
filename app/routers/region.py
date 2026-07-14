@@ -9,7 +9,7 @@ from app.services import region_service
 router = APIRouter(prefix="/regions", tags=["regions"])
 
 
-@router.post("/", response_model=RegionResponse, status_code=status.HTTP_201_CREATED)
+@router.post("", response_model=RegionResponse, status_code=status.HTTP_201_CREATED)
 def create_region(
     data: RegionCreate,
     db: Session = Depends(get_db),
@@ -23,7 +23,7 @@ def create_region(
         ) from exc
 
 
-@router.get("/", response_model=list[RegionResponse])
+@router.get("", response_model=list[RegionResponse])
 def read_regions(db: Session = Depends(get_db)) -> list[RegionResponse]:
     return region_service.list_regions(db)
 
