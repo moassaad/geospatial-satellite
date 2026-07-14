@@ -1,5 +1,11 @@
 # Changelog
 
+## Sprint 12 - Region Update API
+
+- Added `PUT /regions/{region_id}` and `DELETE /regions/{region_id}` to `app/routers/region.py`.
+- Mapped `RegionNotFoundError` and `InvalidGeometryError` to the appropriate HTTP status codes in the new endpoints.
+- Updated `docs/api.md` with PUT and DELETE documentation and status codes.
+
 ## Sprint 11 - Region Read API
 
 - Created `app/routers/region.py` with `POST /regions`, `GET /regions`, and `GET /regions/{region_id}`.

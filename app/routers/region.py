@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 
 from app.core.exceptions import InvalidGeometryError, RegionNotFoundError
 from app.database.database import get_db
-from app.schemas.region import RegionCreate, RegionResponse
+from app.schemas.region import RegionCreate, RegionResponse, RegionUpdate
 from app.services import region_service
 
 router = APIRouter(prefix="/regions", tags=["regions"])
@@ -35,6 +35,40 @@ def read_region(
 ) -> RegionResponse:
     try:
         return region_service.get_region(db, region_id)
+    except RegionNotFoundError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Region not found",
+        ) from exc
+
+
+@router.put("/{region_id}", response_model=RegionResponse)
+def update_region(
+    region_id: int,
+    data: RegionUpdate,
+    db: Session = Depends(get_db),
+) -> RegionResponse:
+    try:
+        return region_service.update_region(db, region_id, data)
+    except RegionNotFoundError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Region not found",
+        ) from exc
+    except InvalidGeometryError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail="Invalid geometry",
+        ) from exc
+
+
+@router.delete("/{region_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_region(
+    region_id: int,
+    db: Session = Depends(get_db),
+) -> None:
+    try:
+        region_service.delete_region(db, region_id)
     except RegionNotFoundError as exc:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
