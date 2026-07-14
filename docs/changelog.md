@@ -1,5 +1,12 @@
 # Changelog
 
+## Sprint 10 - Region Service
+
+- Created `app/services/region_service.py` implementing region business logic.
+- Added `app/core/exceptions.py` with `RegionNotFoundError` and `InvalidGeometryError`.
+- Added geometry validation in the service using Shapely before delegating to the repository.
+- Added `docs/services.md` documenting the region service and domain exceptions.
+
 ## Sprint 09 - Region Repository
 
 - Added `shapely` to `requirements.txt`.
