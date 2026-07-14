@@ -1,5 +1,13 @@
 # Changelog
 
+## Sprint 11 - Region Read API
+
+- Created `app/routers/region.py` with `POST /regions`, `GET /regions`, and `GET /regions/{region_id}`.
+- Updated `RegionResponse` to serialize PostGIS geometry as GeoJSON.
+- Mapped `RegionNotFoundError` to `404 Not Found` and `InvalidGeometryError` to `422 Unprocessable Entity`.
+- Wired the region router into `app/main.py`.
+- Added `docs/api.md` documenting the available endpoints and status codes.
+
 ## Sprint 10 - Region Service
 
 - Created `app/services/region_service.py` implementing region business logic.
