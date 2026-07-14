@@ -1,5 +1,12 @@
 # Changelog
 
+## Sprint 09 - Region Repository
+
+- Added `shapely` to `requirements.txt`.
+- Created `app/repositories/region_repository.py` with CRUD operations for the `Region` model.
+- Converted GeoJSON geometry dictionaries to GeoAlchemy2 geometry objects in the repository.
+- Added `docs/repositories.md` documenting the region repository and its responsibilities.
+
 ## Sprint 07 - Region Database Model
 
 - Added `geoalchemy2` to `requirements.txt`.
