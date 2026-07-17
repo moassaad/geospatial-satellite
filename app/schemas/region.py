@@ -1,7 +1,10 @@
 from datetime import datetime
 from typing import Any
 
-from pydantic import BaseModel, ConfigDict
+from geoalchemy2.elements import WKBElement
+from geoalchemy2.shape import to_shape
+from pydantic import BaseModel, ConfigDict, field_validator
+from shapely.geometry import mapping
 
 
 class RegionBase(BaseModel):
@@ -23,3 +26,10 @@ class RegionResponse(RegionBase):
 
     id: int
     created_at: datetime
+
+    @field_validator("geometry", mode="before")
+    @classmethod
+    def _convert_geometry(cls, value: Any) -> dict[str, Any]:
+        if isinstance(value, WKBElement):
+            return mapping(to_shape(value))
+        return value
