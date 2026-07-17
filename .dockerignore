@@ -7,7 +7,7 @@ __pycache__
 .sprints
 docs
 tests
-docker
+
 sample_data
 .env
 .env.example
