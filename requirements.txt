@@ -6,3 +6,6 @@ psycopg2-binary
 alembic
 geoalchemy2
 shapely
+python-multipart
+pytest
+httpx
