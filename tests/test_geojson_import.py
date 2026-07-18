@@ -8,6 +8,8 @@ from app.core.exceptions import InvalidGeoJSONFileError
 from app.schemas.geojson_import import GeoJSONUploadResponse
 from app.services import geojson_import_service
 
+VALID_CONTENT_TYPE = "application/geo+json"
+VALID_FILENAME = "regions.geojson"
 
 def _valid_geojson_bytes() -> bytes:
     payload = b'{"type": "FeatureCollection", "features": []}'
@@ -17,13 +19,13 @@ def _valid_geojson_bytes() -> bytes:
 class TestProcessGeojsonUpload:
     def test_valid_upload(self) -> None:
         response = geojson_import_service.process_geojson_upload(
-            filename="regions.geojson",
-            content_type="application/geo+json",
+            filename=VALID_FILENAME,
+            content_type=VALID_CONTENT_TYPE,
             contents=_valid_geojson_bytes(),
         )
         assert isinstance(response, GeoJSONUploadResponse)
-        assert response.filename == "regions.geojson"
-        assert response.content_type == "application/geo+json"
+        assert response.filename == VALID_FILENAME
+        assert response.content_type == VALID_CONTENT_TYPE
         assert response.size == len(_valid_geojson_bytes())
         assert response.message == "GeoJSON file accepted for import"
 
@@ -31,14 +33,14 @@ class TestProcessGeojsonUpload:
         with pytest.raises(InvalidGeoJSONFileError):
             geojson_import_service.process_geojson_upload(
                 filename="data.txt",
-                content_type="application/geo+json",
+                content_type=VALID_CONTENT_TYPE,
                 contents=_valid_geojson_bytes(),
             )
 
     def test_rejects_unsupported_content_type(self) -> None:
         with pytest.raises(InvalidGeoJSONFileError):
             geojson_import_service.process_geojson_upload(
-                filename="regions.geojson",
+                filename=VALID_FILENAME,
                 content_type="text/plain",
                 contents=_valid_geojson_bytes(),
             )
@@ -47,40 +49,40 @@ class TestProcessGeojsonUpload:
         large = b"x" * (10 * 1024 * 1024 + 1)
         with pytest.raises(InvalidGeoJSONFileError):
             geojson_import_service.process_geojson_upload(
-                filename="regions.geojson",
-                content_type="application/geo+json",
+                filename=VALID_FILENAME,
+                content_type=VALID_CONTENT_TYPE,
                 contents=large,
             )
 
     def test_rejects_invalid_json(self) -> None:
         with pytest.raises(InvalidGeoJSONFileError):
             geojson_import_service.process_geojson_upload(
-                filename="regions.geojson",
-                content_type="application/geo+json",
+                filename=VALID_FILENAME,
+                content_type=VALID_CONTENT_TYPE,
                 contents=b"not json",
             )
 
     def test_rejects_non_geojson_object(self) -> None:
         with pytest.raises(InvalidGeoJSONFileError):
             geojson_import_service.process_geojson_upload(
-                filename="regions.geojson",
-                content_type="application/geo+json",
+                filename=VALID_FILENAME,
+                content_type=VALID_CONTENT_TYPE,
                 contents=b'{"type": "unknown"}',
             )
 
     def test_rejects_array(self) -> None:
         with pytest.raises(InvalidGeoJSONFileError):
             geojson_import_service.process_geojson_upload(
-                filename="regions.geojson",
-                content_type="application/geo+json",
+                filename=VALID_FILENAME,
+                content_type=VALID_CONTENT_TYPE,
                 contents=b"[1, 2, 3]",
             )
 
     def test_rejects_primitive(self) -> None:
         with pytest.raises(InvalidGeoJSONFileError):
             geojson_import_service.process_geojson_upload(
-                filename="regions.geojson",
-                content_type="application/geo+json",
+                filename=VALID_FILENAME,
+                content_type=VALID_CONTENT_TYPE,
                 contents=b'"string"',
             )
 
@@ -96,14 +98,14 @@ class TestProcessGeojsonUpload:
         with pytest.raises(InvalidGeoJSONFileError):
             geojson_import_service.process_geojson_upload(
                 filename="",
-                content_type="application/geo+json",
+                content_type=VALID_CONTENT_TYPE,
                 contents=_valid_geojson_bytes(),
             )
 
     def test_empty_content_type(self) -> None:
         with pytest.raises(InvalidGeoJSONFileError):
             geojson_import_service.process_geojson_upload(
-                filename="regions.geojson",
+                filename=VALID_FILENAME,
                 content_type="",
                 contents=_valid_geojson_bytes(),
             )
@@ -113,21 +115,21 @@ class TestUploadEndpoint:
     def test_returns_202_and_metadata(self, client: TestClient) -> None:
         response = client.post(
             "/import/geojson",
-            files={"file": ("regions.geojson", _valid_geojson_bytes(), "application/geo+json")},
+            files={"file": (VALID_FILENAME, _valid_geojson_bytes(), VALID_CONTENT_TYPE)},
         )
         assert response.status_code == status.HTTP_202_ACCEPTED
         data = response.json()
-        assert data["filename"] == "regions.geojson"
-        assert data["content_type"] == "application/geo+json"
+        assert data["filename"] == VALID_FILENAME
+        assert data["content_type"] == VALID_CONTENT_TYPE
         assert data["size"] == len(_valid_geojson_bytes())
         assert data["message"] == "GeoJSON file accepted for import"
 
     @pytest.mark.parametrize(
         ("filename", "content_type", "body"),
         [
-            ("data.txt", "application/geo+json", b'{"type": "FeatureCollection"}'),
-            ("regions.geojson", "text/plain", b'{"type": "FeatureCollection"}'),
-            ("regions.geojson", "application/geo+json", b"not json"),
+            ("data.txt", VALID_CONTENT_TYPE, b'{"type": "FeatureCollection"}'),
+            (VALID_FILENAME, "text/plain", b'{"type": "FeatureCollection"}'),
+            (VALID_FILENAME, VALID_CONTENT_TYPE, b"not json"),
         ],
     )
     def test_returns_422_on_invalid_input(
@@ -141,4 +143,4 @@ class TestUploadEndpoint:
             "/import/geojson",
             files={"file": (filename, body, content_type)},
         )
-        assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
+        assert response.status_code == status.HTTP_422_UNPROCESSABLE_CONTENT
