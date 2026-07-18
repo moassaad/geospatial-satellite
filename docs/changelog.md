@@ -1,5 +1,14 @@
 # Changelog
 
+## Sprint 13 - GeoJSON Upload Endpoint
+
+- Added `POST /import/geojson` endpoint accepting GeoJSON file uploads.
+- Created `app/routers/geojson_import.py`, `app/services/geojson_import_service.py`, and `app/schemas/geojson_import.py`.
+- Added `InvalidGeoJSONFileError` to `app/core/exceptions.py` for file validation errors.
+- Added `python-multipart` to `requirements.txt` for multipart form-data support.
+- Wired the import router into `app/main.py`.
+- Added `docs/import.md` documenting the import endpoint.
+
 ## Sprint 12 - Region Update API
 
 - Added `PUT /regions/{region_id}` and `DELETE /regions/{region_id}` to `app/routers/region.py`.

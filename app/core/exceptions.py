@@ -6,3 +6,7 @@ class RegionNotFoundError(Exception):
 
 class InvalidGeometryError(Exception):
     pass
+
+
+class InvalidGeoJSONFileError(Exception):
+    pass
