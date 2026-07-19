@@ -1,8 +1,6 @@
 # GeoJSON Import
 
-The GeoJSON import endpoint accepts a GeoJSON file upload.
-
-The file is validated, but not persisted. Future sprints will parse and store the imported regions.
+The GeoJSON import endpoint accepts a GeoJSON file upload and parses it using GeoPandas. The imported regions are not persisted yet.
 
 ## Endpoint
 
@@ -15,6 +13,8 @@ POST /import/geojson
 - Supported extensions: `.geojson`, `.json`
 - Supported content types: `application/json`, `application/geo+json`
 - Maximum file size: 10 MB
+- Supported geometries: `Polygon`, `MultiPolygon`
+- Geometries are standardized to `EPSG:4326`
 
 ## Response
 
@@ -25,7 +25,10 @@ POST /import/geojson
   "filename": "regions.geojson",
   "content_type": "application/geo+json",
   "size": 1234,
-  "message": "GeoJSON file accepted for import"
+  "message": "GeoJSON file parsed successfully",
+  "feature_count": 27,
+  "columns": ["name", "code"],
+  "crs": "EPSG:4326"
 }
 ```
 
@@ -33,7 +36,7 @@ POST /import/geojson
 
 | Status | Description |
 |--------|-------------|
-| `422 Unprocessable Entity` | Missing file, unsupported extension, invalid content type, exceeds size limit, invalid JSON, or invalid GeoJSON object |
+| `422 Unprocessable Entity` | Missing file, unsupported extension, invalid content type, exceeds size limit, invalid JSON, invalid GeoJSON, unsupported geometry type, missing CRS, or invalid geometries |
 
 ## Example
 

@@ -7,5 +7,6 @@ alembic
 geoalchemy2
 shapely
 python-multipart
+geopandas
 pytest
 httpx

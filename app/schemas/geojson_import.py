@@ -6,3 +6,6 @@ class GeoJSONUploadResponse(BaseModel):
     content_type: str
     size: int
     message: str
+    feature_count: int
+    columns: list[str]
+    crs: str | None
