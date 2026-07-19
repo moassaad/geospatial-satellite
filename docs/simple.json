@@ -1,34 +1,113 @@
-{ "type": "FeatureCollection",
+{
+  "type": "FeatureCollection",
   "features": [
-    { "type": "Feature",
-      "geometry": {"type": "Point", "coordinates": [102.0, 0.5]},
-      "properties": {"prop0": "value0"}
-      },
-    { "type": "Feature",
-      "geometry": {
-        "type": "LineString",
-        "coordinates": [
-          [102.0, 0.0], [103.0, 1.0], [104.0, 0.0], [105.0, 1.0]
-          ]
-        },
+    {
+      "type": "Feature",
       "properties": {
-        "prop0": "value0",
-        "prop1": 0.0
-        }
+        "id": 1,
+        "name": "10th of Ramadan Industrial Zone",
+        "category": "Industrial",
+        "country": "Egypt",
+        "city": "10th of Ramadan",
+        "priority": "High",
+        "satellite": "Sentinel-2",
+        "resolution": "10m",
+        "last_update": "2026-07-15"
       },
-    { "type": "Feature",
-       "geometry": {
-         "type": "Polygon",
-         "coordinates": [
-           [ [100.0, 0.0], [101.0, 0.0], [101.0, 1.0],
-             [100.0, 1.0], [100.0, 0.0] ]
-           ]
-
-       },
-       "properties": {
-         "prop0": "value0",
-         "prop1": {"this": "that"}
-         }
-       }
-    ]
-  }
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [31.6100, 30.2800],
+            [31.6900, 30.2800],
+            [31.6900, 30.3400],
+            [31.6100, 30.3400],
+            [31.6100, 30.2800]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 2,
+        "name": "Nile Delta Agricultural Area",
+        "category": "Agriculture",
+        "country": "Egypt",
+        "priority": "Medium",
+        "crop": "Wheat",
+        "satellite": "Landsat 9",
+        "last_update": "2026-07-10"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [30.7000, 31.1000],
+            [31.0000, 31.1000],
+            [31.0000, 31.3500],
+            [30.7000, 31.3500],
+            [30.7000, 31.1000]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 3,
+        "name": "Red Sea Coral Reefs",
+        "category": "Marine",
+        "country": "Egypt",
+        "priority": "High",
+        "satellite": "Sentinel-2"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [34.0000, 27.9000],
+              [34.0800, 27.9000],
+              [34.0800, 27.9800],
+              [34.0000, 27.9800],
+              [34.0000, 27.9000]
+            ]
+          ],
+          [
+            [
+              [34.2000, 28.1000],
+              [34.2800, 28.1000],
+              [34.2800, 28.1800],
+              [34.2000, 28.1800],
+              [34.2000, 28.1000]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 4,
+        "name": "Aswan High Dam",
+        "category": "Infrastructure",
+        "country": "Egypt",
+        "priority": "Critical",
+        "satellite": "WorldView-3"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [32.8600, 23.9500],
+            [32.9300, 23.9500],
+            [32.9300, 24.0200],
+            [32.8600, 24.0200],
+            [32.8600, 23.9500]
+          ]
+        ]
+      }
+    }
+  ]
+}
