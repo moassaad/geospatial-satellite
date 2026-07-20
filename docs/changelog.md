@@ -1,5 +1,13 @@
 # Changelog
 
+## Sprint 14 - GeoPandas Parser
+
+- Integrated GeoPandas parsing into the `POST /import/geojson` endpoint.
+- Added `geopandas` to `requirements.txt`.
+- Updated `app/services/geojson_import_service.py` to parse uploaded GeoJSON with GeoPandas, validate CRS, transform to EPSG:4326, and enforce Polygon/MultiPolygon geometry types.
+- Extended `app/schemas/geojson_import.py` with `feature_count`, `columns`, and `crs` fields.
+- Updated `docs/import.md` with parsed response metadata and geometry constraints.
+
 ## Sprint 13 - GeoJSON Upload Endpoint
 
 - Added `POST /import/geojson` endpoint accepting GeoJSON file uploads.
