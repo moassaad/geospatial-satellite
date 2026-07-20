@@ -29,6 +29,22 @@ def create(db: Session, data: RegionCreate) -> Region:
     return region
 
 
+def create_many(db: Session, data_list: list[RegionCreate]) -> list[Region]:
+    regions = []
+    for data in data_list:
+        geometry = from_shape(shape(data.geometry), srid=4326)
+        region = Region(
+            name=data.name,
+            geometry=geometry,
+        )
+        regions.append(region)
+    db.add_all(regions)
+    db.commit()
+    for region in regions:
+        db.refresh(region)
+    return regions
+
+
 def update(db: Session, region: Region, data: RegionUpdate) -> Region:
     if data.name is not None:
         region.name = data.name

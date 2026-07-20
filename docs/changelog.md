@@ -1,5 +1,24 @@
 # Changelog
 
+## Sprint 15 - Persist Imported Data
+
+- Updated `POST /import/geojson` to persist parsed regions into PostGIS.
+- Changed response status from `202 Accepted` to `201 Created`.
+- Added `create_many` to `app/repositories/region_repository.py` for bulk insertion.
+- Updated `app/services/geojson_import_service.py` to build `RegionCreate` objects and persist via repository.
+- Extended `app/schemas/geojson_import.py` with `imported_ids` field.
+- Changed model geometry column to `Geometry(srid=4326)` to support both Polygon and MultiPolygon.
+- Added Alembic migration `alter_region_geometry_type` to alter column type and add GIST spatial index.
+- Updated `docs/import.md` with new response and status code.
+
+## Sprint 14 - GeoPandas Parser
+
+- Integrated GeoPandas parsing into the `POST /import/geojson` endpoint.
+- Added `geopandas` to `requirements.txt`.
+- Updated `app/services/geojson_import_service.py` to parse uploaded GeoJSON with GeoPandas, validate CRS, transform to EPSG:4326, and enforce Polygon/MultiPolygon geometry types.
+- Extended `app/schemas/geojson_import.py` with `feature_count`, `columns`, and `crs` fields.
+- Updated `docs/import.md` with parsed response metadata and geometry constraints.
+
 ## Sprint 13 - GeoJSON Upload Endpoint
 
 - Added `POST /import/geojson` endpoint accepting GeoJSON file uploads.
