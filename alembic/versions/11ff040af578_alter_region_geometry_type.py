@@ -26,16 +26,16 @@ def upgrade() -> None:
         existing_type=Geometry(geometry_type="POLYGON", srid=4326),
         postgresql_using="geometry::geometry",
     )
-    op.create_index(
-        "idx_regions_geometry",
-        "regions",
-        ["geometry"],
-        postgresql_using="gist",
-    )
+    # op.create_index(
+    #     "idx_regions_geometry",
+    #     "regions",
+    #     ["geometry"],
+    #     postgresql_using="gist",
+    # )
 
 
 def downgrade() -> None:
-    op.drop_index("idx_regions_geometry", table_name="regions")
+    # op.drop_index("idx_regions_geometry", table_name="regions")
     op.alter_column(
         "regions",
         "geometry",
