@@ -1,6 +1,8 @@
-from fastapi import APIRouter, File, HTTPException, UploadFile, status
+from fastapi import APIRouter, Depends, File, HTTPException, UploadFile, status
+from sqlalchemy.orm import Session
 
 from app.core.exceptions import InvalidGeoJSONFileError
+from app.database.database import get_db
 from app.schemas.geojson_import import GeoJSONUploadResponse
 from app.services import geojson_import_service
 
@@ -10,12 +12,16 @@ router = APIRouter(prefix="/import", tags=["import"])
 @router.post(
     "/geojson",
     response_model=GeoJSONUploadResponse,
-    status_code=status.HTTP_202_ACCEPTED,
+    status_code=status.HTTP_201_CREATED,
 )
-async def upload_geojson(file: UploadFile = File(...)) -> GeoJSONUploadResponse:
+async def upload_geojson(
+    file: UploadFile = File(...),
+    db: Session = Depends(get_db),
+) -> GeoJSONUploadResponse:
     contents = await file.read()
     try:
         return geojson_import_service.process_geojson_upload(
+            db=db,
             filename=file.filename or "",
             content_type=file.content_type or "",
             contents=contents,

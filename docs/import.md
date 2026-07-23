@@ -1,6 +1,6 @@
 # GeoJSON Import
 
-The GeoJSON import endpoint accepts a GeoJSON file upload and parses it using GeoPandas. The imported regions are not persisted yet.
+The GeoJSON import endpoint accepts a GeoJSON file upload, parses it using GeoPandas, and persists the regions into PostGIS.
 
 ## Endpoint
 
@@ -18,17 +18,18 @@ POST /import/geojson
 
 ## Response
 
-`202 Accepted`
+`201 Created`
 
 ```json
 {
   "filename": "regions.geojson",
   "content_type": "application/geo+json",
   "size": 1234,
-  "message": "GeoJSON file parsed successfully",
+  "message": "GeoJSON file imported successfully",
   "feature_count": 27,
   "columns": ["name", "code"],
-  "crs": "EPSG:4326"
+  "crs": "EPSG:4326",
+  "imported_ids": [1, 2, 3]
 }
 ```
 

@@ -3,9 +3,13 @@ import json
 from pathlib import Path
 
 import geopandas as gpd
+from shapely.geometry import mapping
+from sqlalchemy.orm import Session
 
 from app.core.exceptions import InvalidGeoJSONFileError
+from app.repositories import region_repository
 from app.schemas.geojson_import import GeoJSONUploadResponse
+from app.schemas.region import RegionCreate
 
 _MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024
 _ALLOWED_EXTENSIONS = frozenset({".geojson", ".json"})
@@ -89,7 +93,18 @@ def _validate_geometries(gdf: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
     return gdf
 
 
+def _build_region_create_list(gdf: gpd.GeoDataFrame) -> list[RegionCreate]:
+    creates = []
+    for index, row in gdf.iterrows():
+        properties = {k: v for k, v in row.items() if k != "geometry"}
+        name = properties.get("name") or properties.get("Name") or f"Region_{index}"
+        geometry = mapping(row.geometry)
+        creates.append(RegionCreate(name=str(name), geometry=geometry))
+    return creates
+
+
 def process_geojson_upload(
+    db: Session,
     filename: str,
     content_type: str,
     contents: bytes,
@@ -101,12 +116,16 @@ def process_geojson_upload(
 
     gdf = _validate_geometries(_parse_geodataframe(contents))
 
+    region_creates = _build_region_create_list(gdf)
+    regions = region_repository.create_many(db, region_creates)
+
     return GeoJSONUploadResponse(
         filename=filename,
         content_type=content_type,
         size=len(contents),
-        message="GeoJSON file parsed successfully",
+        message="GeoJSON file imported successfully",
         feature_count=len(gdf),
         columns=[column for column in gdf.columns if column != "geometry"],
         crs=str(gdf.crs) if gdf.crs else None,
+        imported_ids=[region.id for region in regions],
     )

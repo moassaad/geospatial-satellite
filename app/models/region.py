@@ -13,7 +13,7 @@ class Region(Base):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True, index=True)
     name: Mapped[str] = mapped_column(nullable=False)
     geometry: Mapped[Geometry] = mapped_column(
-        Geometry("POLYGON", srid=4326),
+        Geometry(srid=4326),
         nullable=False,
     )
     created_at: Mapped[datetime] = mapped_column(

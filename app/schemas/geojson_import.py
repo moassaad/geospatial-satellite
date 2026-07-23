@@ -9,3 +9,4 @@ class GeoJSONUploadResponse(BaseModel):
     feature_count: int
     columns: list[str]
     crs: str | None
+    imported_ids: list[int]
