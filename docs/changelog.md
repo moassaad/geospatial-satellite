@@ -1,5 +1,14 @@
 # Changelog
 
+## Sprint 16 - Containment Query
+
+- Added `POST /contains` to run a spatial containment query.
+- Added `PointRequest` schema with `latitude` and `longitude`.
+- Added `find_containing_regions` to `app/repositories/region_repository.py` using PostGIS `ST_Contains`.
+- Added `find_regions_containing_point` to `app/services/region_service.py`.
+- Created `app/routers/spatial.py` and wired it into `app/main.py`.
+- Added `docs/spatial-query.md` documenting the containment query.
+
 ## Sprint 15 - Persist Imported Data
 
 - Updated `POST /import/geojson` to persist parsed regions into PostGIS.
