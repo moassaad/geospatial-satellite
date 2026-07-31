@@ -1,5 +1,14 @@
 # Changelog
 
+## Sprint 17 - Intersection Query
+
+- Added `POST /intersects` to run a spatial intersection query.
+- Added `find_intersecting_regions` to `app/repositories/region_repository.py` using PostGIS `ST_Intersects`.
+- Added `find_regions_intersecting_point` to `app/services/region_service.py`.
+- Extended `app/routers/spatial.py` with the new intersection endpoint.
+- Added `tests/test_spatial.py` to cover the new spatial behavior.
+- Updated `docs/spatial-query.md` with the intersection query documentation.
+
 ## Sprint 16 - Containment Query
 
 - Added `POST /contains` to run a spatial containment query.

@@ -68,3 +68,13 @@ def find_containing_regions(
     point = func.ST_GeomFromText(f"POINT({longitude} {latitude})", 4326)
     statement = select(Region).where(func.ST_Contains(Region.geometry, point))
     return db.execute(statement).scalars().all()
+
+
+def find_intersecting_regions(
+    db: Session,
+    latitude: float,
+    longitude: float,
+) -> list[Region]:
+    point = func.ST_GeomFromText(f"POINT({longitude} {latitude})", 4326)
+    statement = select(Region).where(func.ST_Intersects(Region.geometry, point))
+    return db.execute(statement).scalars().all()
