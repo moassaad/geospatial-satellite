@@ -18,3 +18,15 @@ def contains(
         data.latitude,
         data.longitude,
     )
+
+
+@router.post("/intersects", response_model=list[RegionResponse])
+def intersects(
+    data: PointRequest,
+    db: Session = Depends(get_db),
+) -> list[RegionResponse]:
+    return region_service.find_regions_intersecting_point(
+        db,
+        data.latitude,
+        data.longitude,
+    )

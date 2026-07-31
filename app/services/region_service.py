@@ -53,3 +53,11 @@ def find_regions_containing_point(
     longitude: float,
 ) -> list[Region]:
     return region_repository.find_containing_regions(db, latitude, longitude)
+
+
+def find_regions_intersecting_point(
+    db: Session,
+    latitude: float,
+    longitude: float,
+) -> list[Region]:
+    return region_repository.find_intersecting_regions(db, latitude, longitude)
