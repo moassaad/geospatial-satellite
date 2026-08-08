@@ -1,5 +1,12 @@
 # Changelog
 
+## Sprint 18 - Swagger Improvements
+
+- Added OpenAPI examples to request and response schemas in `app/schemas/region.py`, `app/schemas/geojson_import.py`, and `app/schemas/health.py`.
+- Documented error responses in the route decorators of `app/routers/region.py` and `app/routers/geojson_import.py`.
+- Added tag metadata through `openapi_tags` in `app/main.py`.
+- Added `docs/swagger.md` documenting tags, examples, and documented responses.
+
 ## Sprint 15 - Persist Imported Data
 
 - Updated `POST /import/geojson` to persist parsed regions into PostGIS.

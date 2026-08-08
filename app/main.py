@@ -13,7 +13,23 @@ class RootResponse(BaseModel):
     message: str
 
 
-app = FastAPI(title=settings.app_name)
+openapi_tags = [
+    {
+        "name": "health",
+        "description": "Health status of the application and its database.",
+    },
+    {
+        "name": "regions",
+        "description": "Create, read, update, and delete Regions of Interest.",
+    },
+    {
+        "name": "import",
+        "description": "Import GeoJSON files into the region catalog.",
+    },
+]
+
+
+app = FastAPI(title=settings.app_name, openapi_tags=openapi_tags)
 app.include_router(health_router)
 app.include_router(region_router)
 app.include_router(import_router)

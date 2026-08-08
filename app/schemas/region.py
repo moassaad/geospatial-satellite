@@ -3,26 +3,71 @@ from typing import Any
 
 from geoalchemy2.elements import WKBElement
 from geoalchemy2.shape import to_shape
-from pydantic import BaseModel, ConfigDict, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 from shapely.geometry import mapping
+
+_EXAMPLE_GEOMETRY: dict[str, Any] = {
+    "type": "Polygon",
+    "coordinates": [
+        [
+            [31.0, 30.0],
+            [31.5, 30.0],
+            [31.5, 30.5],
+            [31.0, 30.5],
+            [31.0, 30.0],
+        ]
+    ],
+}
 
 
 class RegionBase(BaseModel):
-    name: str
-    geometry: dict[str, Any]
+    name: str = Field(examples=["Cairo"])
+    geometry: dict[str, Any] = Field(examples=[_EXAMPLE_GEOMETRY])
 
 
 class RegionCreate(RegionBase):
-    pass
+    model_config = ConfigDict(
+        json_schema_extra={
+            "examples": [
+                {
+                    "name": "Cairo",
+                    "geometry": _EXAMPLE_GEOMETRY,
+                }
+            ],
+        }
+    )
 
 
 class RegionUpdate(BaseModel):
-    name: str | None = None
-    geometry: dict[str, Any] | None = None
+    name: str | None = Field(default=None, examples=["Giza"])
+    geometry: dict[str, Any] | None = Field(default=None, examples=[_EXAMPLE_GEOMETRY])
+
+    model_config = ConfigDict(
+        json_schema_extra={
+            "examples": [
+                {
+                    "name": "Giza",
+                    "geometry": _EXAMPLE_GEOMETRY,
+                }
+            ],
+        }
+    )
 
 
 class RegionResponse(RegionBase):
-    model_config = ConfigDict(from_attributes=True)
+    model_config = ConfigDict(
+        from_attributes=True,
+        json_schema_extra={
+            "examples": [
+                {
+                    "id": 1,
+                    "name": "Cairo",
+                    "geometry": _EXAMPLE_GEOMETRY,
+                    "created_at": "2026-01-01T00:00:00",
+                }
+            ],
+        },
+    )
 
     id: int
     created_at: datetime
