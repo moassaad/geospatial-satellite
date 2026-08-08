@@ -13,6 +13,11 @@ router = APIRouter(prefix="/import", tags=["import"])
     "/geojson",
     response_model=GeoJSONUploadResponse,
     status_code=status.HTTP_201_CREATED,
+    responses={
+        status.HTTP_422_UNPROCESSABLE_ENTITY: {
+            "description": "Invalid or unsupported GeoJSON file",
+        },
+    },
 )
 async def upload_geojson(
     file: UploadFile = File(...),

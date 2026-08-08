@@ -9,7 +9,16 @@ from app.services import region_service
 router = APIRouter(prefix="/regions", tags=["regions"])
 
 
-@router.post("", response_model=RegionResponse, status_code=status.HTTP_201_CREATED)
+@router.post(
+    "",
+    response_model=RegionResponse,
+    status_code=status.HTTP_201_CREATED,
+    responses={
+        status.HTTP_422_UNPROCESSABLE_ENTITY: {
+            "description": "Invalid geometry in request body",
+        },
+    },
+)
 def create_region(
     data: RegionCreate,
     db: Session = Depends(get_db),
@@ -28,7 +37,15 @@ def read_regions(db: Session = Depends(get_db)) -> list[RegionResponse]:
     return region_service.list_regions(db)
 
 
-@router.get("/{region_id}", response_model=RegionResponse)
+@router.get(
+    "/{region_id}",
+    response_model=RegionResponse,
+    responses={
+        status.HTTP_404_NOT_FOUND: {
+            "description": "Region not found",
+        },
+    },
+)
 def read_region(
     region_id: int,
     db: Session = Depends(get_db),
@@ -42,7 +59,18 @@ def read_region(
         ) from exc
 
 
-@router.put("/{region_id}", response_model=RegionResponse)
+@router.put(
+    "/{region_id}",
+    response_model=RegionResponse,
+    responses={
+        status.HTTP_404_NOT_FOUND: {
+            "description": "Region not found",
+        },
+        status.HTTP_422_UNPROCESSABLE_ENTITY: {
+            "description": "Invalid geometry in request body",
+        },
+    },
+)
 def update_region(
     region_id: int,
     data: RegionUpdate,
@@ -62,7 +90,15 @@ def update_region(
         ) from exc
 
 
-@router.delete("/{region_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete(
+    "/{region_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    responses={
+        status.HTTP_404_NOT_FOUND: {
+            "description": "Region not found",
+        },
+    },
+)
 def delete_region(
     region_id: int,
     db: Session = Depends(get_db),
