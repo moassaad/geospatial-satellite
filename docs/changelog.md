@@ -1,5 +1,14 @@
 # Changelog
 
+## Sprint 19 - Integration Testing
+
+- Added `tests/integration/` with a conftest that runs against a real PostGIS database, wraps each test in a rolled-back transaction, and skips when the test database is unreachable.
+- Added CRUD integration tests in `tests/integration/test_regions_crud.py` covering create, list, read, update, and delete.
+- Added health integration test in `tests/integration/test_health.py`.
+- Added containment query integration tests in `tests/integration/test_contains.py`.
+- Added intersection query integration tests in `tests/integration/test_intersects.py`.
+- Added `docs/testing.md` documenting how to run unit and integration tests.
+
 ## Sprint 18 - Swagger Improvements
 
 - Added OpenAPI examples to request and response schemas in `app/schemas/region.py`, `app/schemas/geojson_import.py`, and `app/schemas/health.py`.

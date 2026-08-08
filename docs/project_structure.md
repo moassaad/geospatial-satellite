@@ -16,6 +16,7 @@ app/
     utils/
 
 tests/
+    integration/
 
 docker/
 

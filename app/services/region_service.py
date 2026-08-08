@@ -45,3 +45,19 @@ def update_region(db: Session, region_id: int, data: RegionUpdate) -> Region:
 def delete_region(db: Session, region_id: int) -> None:
     region = get_region(db, region_id)
     region_repository.delete(db, region)
+
+
+def find_regions_containing_point(
+    db: Session,
+    latitude: float,
+    longitude: float,
+) -> list[Region]:
+    return region_repository.find_containing_regions(db, latitude, longitude)
+
+
+def find_regions_intersecting_point(
+    db: Session,
+    latitude: float,
+    longitude: float,
+) -> list[Region]:
+    return region_repository.find_intersecting_regions(db, latitude, longitude)
