@@ -7,6 +7,24 @@
 - Added tag metadata through `openapi_tags` in `app/main.py`.
 - Added `docs/swagger.md` documenting tags, examples, and documented responses.
 
+## Sprint 17 - Intersection Query
+
+- Added `POST /intersects` to run a spatial intersection query.
+- Added `find_intersecting_regions` to `app/repositories/region_repository.py` using PostGIS `ST_Intersects`.
+- Added `find_regions_intersecting_point` to `app/services/region_service.py`.
+- Extended `app/routers/spatial.py` with the new intersection endpoint.
+- Added `tests/test_spatial.py` to cover the new spatial behavior.
+- Updated `docs/spatial-query.md` with the intersection query documentation.
+
+## Sprint 16 - Containment Query
+
+- Added `POST /contains` to run a spatial containment query.
+- Added `PointRequest` schema with `latitude` and `longitude`.
+- Added `find_containing_regions` to `app/repositories/region_repository.py` using PostGIS `ST_Contains`.
+- Added `find_regions_containing_point` to `app/services/region_service.py`.
+- Created `app/routers/spatial.py` and wired it into `app/main.py`.
+- Added `docs/spatial-query.md` documenting the containment query.
+
 ## Sprint 15 - Persist Imported Data
 
 - Updated `POST /import/geojson` to persist parsed regions into PostGIS.

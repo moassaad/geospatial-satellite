@@ -54,6 +54,11 @@ class RegionUpdate(BaseModel):
     )
 
 
+class PointRequest(BaseModel):
+    latitude: float
+    longitude: float
+
+
 class RegionResponse(RegionBase):
     model_config = ConfigDict(
         from_attributes=True,
