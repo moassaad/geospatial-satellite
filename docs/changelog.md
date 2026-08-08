@@ -1,5 +1,10 @@
 # Changelog
 
+## Sprint 20 - Complete Project Documentation
+
+- Rewrote `README.md` as complete project documentation covering overview, implemented features, layered architecture, tech stack, project structure, installation, configuration, running the application (Docker and local), full API endpoint reference, request/response examples, spatial data notes, testing, Docker, screenshots, and roadmap.
+- Kept documentation synchronized with the current implementation and linked feature docs instead of duplicating content.
+
 ## Sprint 19 - Integration Testing
 
 - Added `tests/integration/` with a conftest that runs against a real PostGIS database, wraps each test in a rolled-back transaction, and skips when the test database is unreachable.

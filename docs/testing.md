@@ -57,7 +57,7 @@ The integration tests use the `TEST_DATABASE_URL` environment variable when it i
 Example:
 
 ```bash
-export TEST_DATABASE_URL=postgresql+psycopg2://satellite_user:satellite_password@localhost:5432/satellite_db
+export TEST_DATABASE_URL=postgresql+psycopg2://satellite_user:satellite_password@localhost:5433/satellite_db
 pytest tests/integration
 ```
 
@@ -75,4 +75,4 @@ pytest tests/integration
    pytest
    ```
 
-The integration tests connect to the database exposed on `localhost:5432`.
+The integration tests connect to the database exposed on `localhost:5433`.
